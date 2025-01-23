@@ -1,7 +1,7 @@
+use aws_lc_rs::signature::{Ed25519KeyPair, KeyPair};
 use jsonwebtoken::{
     decode, encode, get_current_timestamp, Algorithm, DecodingKey, EncodingKey, Validation,
 };
-use ring::signature::{Ed25519KeyPair, KeyPair};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -11,7 +11,7 @@ pub struct Claims {
 }
 
 fn main() {
-    let doc = Ed25519KeyPair::generate_pkcs8(&ring::rand::SystemRandom::new()).unwrap();
+    let doc = Ed25519KeyPair::generate_pkcs8(&aws_lc_rs::rand::SystemRandom::new()).unwrap();
     let encoding_key = EncodingKey::from_ed_der(doc.as_ref());
 
     let pair = Ed25519KeyPair::from_pkcs8(doc.as_ref()).unwrap();
